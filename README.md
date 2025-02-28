@@ -17,7 +17,7 @@ The normalization process was achieved through multiple milestones:
 - **Milestone 2:** Partial normalization by separating dependent entities.
 - **Milestone 3 and 4:** Full normalization to **Third Normal Form (3NF)** with lookup tables and relational constraints.
 
-![Intital Model](./initial-er-model/model.png)
+![Initital Model](./initial-er-model/model.png)
 ![Normalized ER Diagram](./er-model/er-diagram.png)
 
 ---
