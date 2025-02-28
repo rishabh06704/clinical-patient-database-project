@@ -17,7 +17,8 @@ The normalization process was achieved through multiple milestones:
 - **Milestone 2:** Partial normalization by separating dependent entities.
 - **Milestone 3 and 4:** Full normalization to **Third Normal Form (3NF)** with lookup tables and relational constraints.
 
-![ER Diagram](./er-model/er-diagram.png)
+![Intital Model](./initial-er-model/model.png)
+![Normalized ER Diagram](./er-model/er-diagram.png)
 
 ---
 
@@ -28,28 +29,19 @@ Before normalization, exploratory analysis was performed to understand the data 
 3. **Statistical Summaries:** Descriptive statistics for healthcare expenses and coverage.
 
 ### Example Queries and Screenshots
-Question 1	What is the percentage of patients missing information regarding passport number in each gender? 
-* Percentage must be a number between 0-100 with 1 decimal place
-MITRE SQL	SELECT GENDER,
-ROUND(100.0 * SUM(CASE WHEN PASSPORT IS NULL THEN 1 ELSE 0 END) / COUNT(*), 1) AS missing_passport_percentage
-FROM hc848.MITRE_PATIENT
-GROUP BY GENDER;
-Screenshot	 
-Normalized SQL	
 
-- **Result Screenshot:**
-    ![Demographic Distribution](./analysis/screenshots/demographic_distribution.png)
-
-- **Missing Values Query:**
+- **Statistical Summary Query: Distribution (%) of patients living in houses (or similar) vs patients living in apartments (or similar) in each County in Massachusetts**
     ```sql
     SELECT 
-      GENDER, 
-      ROUND(100.0 * SUM(CASE WHEN PASSPORT IS NULL THEN 1 ELSE 0 END) / COUNT(*), 1) AS Missing_Passport_Percentage
+      county, 
+      ROUND(SUM(CASE WHEN INSTR(ADDRESS, 'Apt') > 0 OR INSTR(ADDRESS, 'Unit') > 0 THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 1) AS Apartment_Percentage,
+      ROUND(SUM(CASE WHEN INSTR(ADDRESS, 'Apt') = 0 AND INSTR(ADDRESS, 'Unit') = 0 THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 1) AS Houses_Percentage  
     FROM MITRE_PATIENT
-    GROUP BY GENDER;
+    WHERE state = 'Massachusetts'
+    GROUP BY county;
     ```
 - **Result Screenshot:**
-    ![Missing Values](./analysis/screenshots/missing_values.png)
+    ![Statistical Summary](./analysis/screenshots/Question-5.png)
 
 ---
 
@@ -73,21 +65,6 @@ Normalized SQL
 
 ---
 
-## How to Use
-1. **Clone this repository:**
-    ```bash
-    git clone <repository-url>
-    ```
-2. **Navigate to the directory:**
-    ```bash
-    cd clinical-patient-database
-    ```
-3. **SQL Scripts Execution Order:**
-    - `queries.sql` - To perform exploratory data analysis.
-    - `schema.sql` - To set up the normalized database schema.
-    - `migration.sql` - To migrate data from the denormalized to the normalized schema.
-
----
 
 ## Lessons Learned and Challenges
 - **Exploratory Analysis:** Helped understand data distributions and missing values, guiding the normalization process.
@@ -96,7 +73,3 @@ Normalized SQL
 
 ---
 
-## Contact
-For any queries or collaboration, feel free to reach out:
-- **LinkedIn:** [Your LinkedIn Profile](https://linkedin.com/in/your-profile)
-- **Portfolio:** [Your Portfolio Website](https://your-portfolio-link.com)
