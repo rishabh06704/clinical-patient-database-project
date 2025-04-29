@@ -81,6 +81,6 @@ Before normalization, exploratory analysis was performed to understand the data 
 
 ### Repository
 View the full repository and documentation on GitHub:  
-[GitHub Repository – VDMS Requirements Engineering](https://github.com/rishabh06704/clinical-patient-database-project)
+[GitHub Repository – clinical-patient-database-project](https://github.com/rishabh06704/clinical-patient-database-project)
 
 ---
